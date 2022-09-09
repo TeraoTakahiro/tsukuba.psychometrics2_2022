@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.407">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Takahiro Terao">
+<meta name="dcterms.date" content="2022-09-09">
+
+<title>宿題1　記述統計量総復習</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="report_01_2022_files/libs/quarto-html/quarto.js"></script>
+<script src="report_01_2022_files/libs/quarto-html/popper.min.js"></script>
+<script src="report_01_2022_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="report_01_2022_files/libs/quarto-html/anchor.min.js"></script>
+<link href="report_01_2022_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="report_01_2022_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="report_01_2022_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="report_01_2022_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="report_01_2022_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#宿題の概要" id="toc-宿題の概要" class="nav-link active" data-scroll-target="#宿題の概要">宿題の概要</a></li>
+  <li><a href="#csvファイルの読み込み" id="toc-csvファイルの読み込み" class="nav-link" data-scroll-target="#csvファイルの読み込み">CSVファイルの読み込み</a>
+  <ul class="collapse">
+  <li><a href="#作業ディレクトリの指定" id="toc-作業ディレクトリの指定" class="nav-link" data-scroll-target="#作業ディレクトリの指定">作業ディレクトリの指定</a></li>
+  <li><a href="#csvファイルの読み込みd1と命名" id="toc-csvファイルの読み込みd1と命名" class="nav-link" data-scroll-target="#csvファイルの読み込みd1と命名">CSVファイルの読み込み，d1と命名</a></li>
+  <li><a href="#最初の6行を表示" id="toc-最初の6行を表示" class="nav-link" data-scroll-target="#最初の6行を表示">最初の6行を表示</a></li>
+  <li><a href="#最初の10行を表示" id="toc-最初の10行を表示" class="nav-link" data-scroll-target="#最初の10行を表示">最初の10行を表示</a></li>
+  <li><a href="#最後の6行を表示" id="toc-最後の6行を表示" class="nav-link" data-scroll-target="#最後の6行を表示">最後の6行を表示</a></li>
+  </ul></li>
+  <li><a href="#群ごとのデータの分割" id="toc-群ごとのデータの分割" class="nav-link" data-scroll-target="#群ごとのデータの分割">群ごとのデータの分割</a>
+  <ul class="collapse">
+  <li><a href="#女性fのみのデータセット" id="toc-女性fのみのデータセット" class="nav-link" data-scroll-target="#女性fのみのデータセット">女性(f)のみのデータセット</a></li>
+  <li><a href="#男性mのみのデータセット" id="toc-男性mのみのデータセット" class="nav-link" data-scroll-target="#男性mのみのデータセット">男性(m)のみのデータセット</a></li>
+  </ul></li>
+  <li><a href="#量的変数の記述統計量" id="toc-量的変数の記述統計量" class="nav-link" data-scroll-target="#量的変数の記述統計量">量的変数の記述統計量</a>
+  <ul class="collapse">
+  <li><a href="#psychパッケージのインストール" id="toc-psychパッケージのインストール" class="nav-link" data-scroll-target="#psychパッケージのインストール">psychパッケージのインストール</a></li>
+  <li><a href="#psychパッケージの読み込み" id="toc-psychパッケージの読み込み" class="nav-link" data-scroll-target="#psychパッケージの読み込み">psychパッケージの読み込み</a></li>
+  <li><a href="#各変数の記述統計量" id="toc-各変数の記述統計量" class="nav-link" data-scroll-target="#各変数の記述統計量">各変数の記述統計量</a></li>
+  <li><a href="#群ごとの記述統計量" id="toc-群ごとの記述統計量" class="nav-link" data-scroll-target="#群ごとの記述統計量">群ごとの記述統計量</a></li>
+  <li><a href="#ヒストグラムの描出" id="toc-ヒストグラムの描出" class="nav-link" data-scroll-target="#ヒストグラムの描出">ヒストグラムの描出</a></li>
+  <li><a href="#共分散と相関係数の算出" id="toc-共分散と相関係数の算出" class="nav-link" data-scroll-target="#共分散と相関係数の算出">共分散と相関係数の算出</a></li>
+  <li><a href="#散布図の描出" id="toc-散布図の描出" class="nav-link" data-scroll-target="#散布図の描出">散布図の描出</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">宿題1　記述統計量総復習</h1>
+</div>
+
+
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Takahiro Terao </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 9, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="宿題の概要" class="level2">
+<h2 class="anchored" data-anchor-id="宿題の概要">宿題の概要</h2>
+<ol type="1">
+<li>群分け変数を1つ，量的変数を2つ以上含むデータセットを作成し，CSV形式のファイルとして保存してください。</li>
+<li>CSVファイルをR (RStudio) で読み込み，d1という名前をつけたうえで，最初の6行を表示させてください。また，最初の10行，最後の6行を表示させてください。</li>
+<li>データセットを群ごとに分割してください。</li>
+<li>量的変数の記述統計量を算出してください。その際，第1四分位数と中央値，第3四分位数を求める指定を行ってください。また，ヒストグラムを描いてください。</li>
+<li>群ごとに量的変数の記述統計量を算出してください。</li>
+<li>量的変数間の共分散と相関係数を算出してください。また，散布図を描いてください。</li>
+<li>スクリプトと実行結果全体（図含む）をコピーしてWord等に貼り付け，提出してください。</li>
+</ol>
+<p>宿題としてRに実行させるスクリプトは，グレーの箇所のみです。</p>
+</section>
+<section id="csvファイルの読み込み" class="level2">
+<h2 class="anchored" data-anchor-id="csvファイルの読み込み">CSVファイルの読み込み</h2>
+<section id="作業ディレクトリの指定" class="level3">
+<h3 class="anchored" data-anchor-id="作業ディレクトリの指定">作業ディレクトリの指定</h3>
+<p>参考動画を見ながら，自分がCSVファイルを保存したフォルダ名を<code>setwd()</code>のカッコ内に入れてください。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">terao</span><span class="sc">\\</span><span class="st">CloudStation</span><span class="sc">\\</span><span class="st">TERAO</span><span class="sc">\\</span><span class="st">2022</span><span class="sc">\\</span><span class="st">筑波_心理学統計法2</span><span class="sc">\\</span><span class="st">授業資料</span><span class="sc">\\</span><span class="st">第1回</span><span class="sc">\\</span><span class="st">"</span>)</span></code></pre></div>
+</div>
+<p>Rに，分析作業を行うフォルダを知らせるスクリプトです。 これがうまくできていないと，R側で読み込むCSVファイルの場所が認識されません。</p>
+<p>Windows端末をご利用の方は，フォルダ名をペーストするとバックスラッシュ<code>\</code>が1つだけの状態になります。フォルダの区切りがバックスラッシュ2つ<code>\\</code>になるように変更してください。</p>
+</section>
+<section id="csvファイルの読み込みd1と命名" class="level3">
+<h3 class="anchored" data-anchor-id="csvファイルの読み込みd1と命名">CSVファイルの読み込み，d1と命名</h3>
+<ul>
+<li><code>read.csv()</code>は，CSV形式のファイルを読み込む関数です。</li>
+<li>最初の<code>"lecture1.csv"</code>は，読み込みたいCSVファイルが<code>lecture1.csv</code>という名称であることをR側に伝えています。</li>
+<li>次の<code>header=TRUE</code>は，最初の1行目がデータではなく，変数名であることをR側に伝えています。
+<ul>
+<li>変数名がないデータセットを読み込む場合は，<code>header=FALSE</code>とします。</li>
+</ul></li>
+<li><code>&lt;-</code>は，代入・格納を意味します。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"lecture1.csv"</span>,<span class="at">header=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<ul>
+<li><p>指定した作業ディレクトリにCSVファイルがない場合，以下のようなエラーが出ます。 <code>No such file or directory</code></p></li>
+<li><p>この場合は，読み込みたいCSV形式のファイルがそのフォルダにないか，CSVでない形式で保存されている場合があります。ご確認ください。</p></li>
+</ul>
+</section>
+<section id="最初の6行を表示" class="level3">
+<h3 class="anchored" data-anchor-id="最初の6行を表示">最初の6行を表示</h3>
+<ul>
+<li><code>head()</code>は，最初の何行かを表示してみる関数です。</li>
+<li><code>head()</code>の中には，データセットの名前を入れます。いまは，<code>d1</code>というデータセットについて最初の行を表示したいので，<code>d1</code>を入れます。</li>
+<li><code>head(d1)</code>とすると，デフォルトで6行分表示してくれます。6行以外としたい場合は，その後ろに表示したい行数を追加します。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  gender kokugo suugaku
+1      m     48      57
+2      m     51      34
+3      m     53      35
+4      m     58      67
+5      m     51      43
+6      m     43      39</code></pre>
+</div>
+</div>
+</section>
+<section id="最初の10行を表示" class="level3">
+<h3 class="anchored" data-anchor-id="最初の10行を表示">最初の10行を表示</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d1,<span class="dv">10</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   gender kokugo suugaku
+1       m     48      57
+2       m     51      34
+3       m     53      35
+4       m     58      67
+5       m     51      43
+6       m     43      39
+7       m     41      63
+8       m     40      52
+9       m     53      60
+10      m     44      41</code></pre>
+</div>
+</div>
+<ul>
+<li><code>head(d1,100)</code>とすると，100行分表示してくれます。何行表示させるか，遊んでみてください。</li>
+</ul>
+</section>
+<section id="最後の6行を表示" class="level3">
+<h3 class="anchored" data-anchor-id="最後の6行を表示">最後の6行を表示</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(d1)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      gender kokugo suugaku
+9995       f     41      46
+9996       f     45      68
+9997       f     51      51
+9998       f     49      46
+9999       f     54      59
+10000      f     50      50</code></pre>
+</div>
+</div>
+<ul>
+<li><code>tail(d1)</code>とすると，データの最後の6行分表示してくれます。</li>
+<li><code>tail(d1,10)</code>とすると，最後の10行分表示できます。こちらも遊んでみてください。</li>
+</ul>
+</section>
+</section>
+<section id="群ごとのデータの分割" class="level2">
+<h2 class="anchored" data-anchor-id="群ごとのデータの分割">群ごとのデータの分割</h2>
+<section id="女性fのみのデータセット" class="level3">
+<h3 class="anchored" data-anchor-id="女性fのみのデータセット">女性(f)のみのデータセット</h3>
+<ul>
+<li><code>subset()</code>関数は，あるデータフレームの特定の変数について，あてはまる人のデータだけを抽出する関数です。
+<ul>
+<li><code>d1</code>は，群分けする前のデータフレームです。</li>
+<li><code>gender=="f"</code>は，性別 (gender) という変数列について女性 (f) となっている行を指定しています。イコール2つ<code>==</code>ですので，気をつけてください。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>d1_f <span class="ot">&lt;-</span> <span class="fu">subset</span>(d1,gender<span class="sc">==</span><span class="st">"f"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d1_f)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     gender kokugo suugaku
+5001      f     47      51
+5002      f     45      31
+5003      f     49      44
+5004      f     48      66
+5005      f     56      57
+5006      f     52      51</code></pre>
+</div>
+</div>
+</section>
+<section id="男性mのみのデータセット" class="level3">
+<h3 class="anchored" data-anchor-id="男性mのみのデータセット">男性(m)のみのデータセット</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>d1_m <span class="ot">&lt;-</span> <span class="fu">subset</span>(d1,gender<span class="sc">==</span><span class="st">'m'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(d1_m)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  gender kokugo suugaku
+1      m     48      57
+2      m     51      34
+3      m     53      35
+4      m     58      67
+5      m     51      43
+6      m     43      39</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="量的変数の記述統計量" class="level2">
+<h2 class="anchored" data-anchor-id="量的変数の記述統計量">量的変数の記述統計量</h2>
+<section id="psychパッケージのインストール" class="level3">
+<h3 class="anchored" data-anchor-id="psychパッケージのインストール">psychパッケージのインストール</h3>
+<p>この作業は，初めてパッケージを利用するときのみ実施してください。 一度インストールすれば，電源を切ってから再度コンピュータを立ち上げたとしても，端末側にパッケージのファイルが残っているため，<code>install.packages()</code>を実行することなくパッケージを利用できます。</p>
+<ul>
+<li>初めてインストールする方は，以下のスクリプトの冒頭の<code>#</code>は削除してください。
+<ul>
+<li><code>#</code>はコメントアウトの意味で，その行をまるごと実行せずに（無視して）先へ進んでくれます。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages('psych', repos="https://cloud.r-project.org/") </span></span></code></pre></div>
+</div>
+</section>
+<section id="psychパッケージの読み込み" class="level3">
+<h3 class="anchored" data-anchor-id="psychパッケージの読み込み">psychパッケージの読み込み</h3>
+<ul>
+<li>2回目以降は，ここから実行します。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'psych' was built under R version 4.2.1</code></pre>
+</div>
+</div>
+</section>
+<section id="各変数の記述統計量" class="level3">
+<h3 class="anchored" data-anchor-id="各変数の記述統計量">各変数の記述統計量</h3>
+<ul>
+<li><code>describe()</code>関数は，記述統計量を求める関数です。文字列が入っているとエラーになります。
+<ul>
+<li>第一四分位数 (25%) と第三四分位数 (75%) を算出するため，<code>quant=c(.25,.75)</code>を追加しています。 もし余力のある人は，違う分位点にした結果も出力してみてください。</li>
+</ul></li>
+<li>最初の行では，d1というデータフレームの国語列と数学列を選択して，<code>d1_ryo</code>と命名するスクリプトです。以降の分析でも使うので，新たに名前を付けておいて長いスクリプトを書かないようにするひとつの作戦です。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>d1_ryo <span class="ot">&lt;-</span> d1[,<span class="fu">c</span>(<span class="st">"kokugo"</span>,<span class="st">"suugaku"</span>)]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(d1_ryo,<span class="at">quant=</span><span class="fu">c</span>(.<span class="dv">25</span>,.<span class="dv">75</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        vars     n  mean   sd median trimmed   mad min max range  skew kurtosis
+kokugo     1 10000 49.96 5.07     50   49.98  4.45  31  70    39 -0.02    -0.02
+suugaku    2 10000 50.19 9.96     50   50.17 10.38   9  96    87  0.03     0.04
+          se Q0.25 Q0.75
+kokugo  0.05    47    53
+suugaku 0.10    43    57</code></pre>
+</div>
+</div>
+<ul>
+<li>varsは，読み込んだ変数の番号です。</li>
+<li>nは，集計に使用したサンプルサイズ（人数）です。</li>
+<li>meanは，標本平均の値です。</li>
+<li>sdは，不偏標準偏差です。人数-1で除した標準偏差です。</li>
+<li>medianは，中央値です。</li>
+<li>trimmedは，調整平均です。デフォルトでは，両端10%ずつを切って平均値を求めます。</li>
+<li>madは，中央値絶対偏差 (Median Absolute Difference) で，中央値からの散らばりに関する統計量です。 <span class="math display">\[
+MAD=\frac{1}{N}\sum_{i=1}^{N}|x_i-\overline{x}|
+\]</span></li>
+<li>min, maxはそれぞれ，最小値・最大値です。</li>
+<li>rangeは，範囲です。</li>
+<li>skewは，歪度(skewness)です。</li>
+<li>kurtosisは，尖度です。</li>
+<li>seは，標本平均の標準誤差 (standard error) です。来週学習します。</li>
+<li>Q0.25およびQ0.75はそれぞれ，第一四分位数と第三四分位数です。</li>
+</ul>
+</section>
+<section id="群ごとの記述統計量" class="level3">
+<h3 class="anchored" data-anchor-id="群ごとの記述統計量">群ごとの記述統計量</h3>
+<ul>
+<li><code>describeBy()</code>関数は，群ごとに記述統計量を算出する関数です。
+<ul>
+<li><code>d1_ryo</code>は，分析したい量的変数のデータフレームを指定します。文字列が入っているとエラーになります。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describeBy</span>(d1_ryo,d1<span class="sc">$</span>gender,<span class="at">quant=</span><span class="fu">c</span>(.<span class="dv">25</span>,.<span class="dv">75</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Descriptive statistics by group 
+group: f
+        vars    n  mean   sd median trimmed   mad min max range  skew kurtosis
+kokugo     1 5000 49.92 5.06     50   49.92  4.45  31  67    36 -0.01    -0.08
+suugaku    2 5000 50.20 9.90     50   50.17 10.38   9  96    87  0.04     0.08
+          se Q0.25 Q0.75
+kokugo  0.07    46    53
+suugaku 0.14    43    57
+------------------------------------------------------------ 
+group: m
+        vars    n  mean    sd median trimmed   mad min max range  skew kurtosis
+kokugo     1 5000 50.01  5.07     50   50.03  4.45  32  70    38 -0.04     0.03
+suugaku    2 5000 50.18 10.02     50   50.16 10.38  15  88    73  0.02     0.00
+          se Q0.25 Q0.75
+kokugo  0.07 47.00    53
+suugaku 0.14 43.75    57</code></pre>
+</div>
+</div>
+</section>
+<section id="ヒストグラムの描出" class="level3">
+<h3 class="anchored" data-anchor-id="ヒストグラムの描出">ヒストグラムの描出</h3>
+<ul>
+<li>量的変数ひとつひとつの分布の形状を，視覚的に確認します。
+<ul>
+<li><code>d1$kokugo</code>および<code>d1$suugaku</code>は，ヒストグラムを描きたい変数名の指定です。</li>
+<li><code>las=1</code>は，縦軸の文字を成立させるオプションです。<code>las=0</code>や<code>las=2</code>も試してみてください。</li>
+<li><code>col="royalblue1"</code>は，色の指定オプションです。<a href="http://www.okadajp.org/RWiki/?%E8%89%B2%E8%A6%8B%E6%9C%AC">Rの色見本</a>を適宜参照して，好きな色に着色してみてください。</li>
+<li><code>main="国語"</code>は，タイトルを国語という文字列にするオプションです。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(d1<span class="sc">$</span>kokugo,<span class="at">las=</span><span class="dv">1</span>,<span class="at">main=</span><span class="st">"国語"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="report_01_2022_files/figure-html/histogram-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(d1<span class="sc">$</span>suugaku,<span class="at">las=</span><span class="dv">1</span>,<span class="at">col=</span><span class="st">"royalblue1"</span>,<span class="at">main=</span><span class="st">"数学"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="report_01_2022_files/figure-html/histogram-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="共分散と相関係数の算出" class="level3">
+<h3 class="anchored" data-anchor-id="共分散と相関係数の算出">共分散と相関係数の算出</h3>
+<ul>
+<li><code>d1_ryo</code>について，共分散行列と相関行列を算出します。
+<ul>
+<li><code>use="pairwise.complete.obs"</code>は，もし欠測値があった場合に，その2つの変数についてデータが揃っている人のデータのみを用いて相関係数を算出する，というオプションです。</li>
+<li>このデータでは欠測値はありませんが，実際のデータ分析の際には欠測値がありえますので，指定しておくと無難です。もちろん，<code>cov()</code>関数でも利用できます。</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(d1_ryo)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           kokugo   suugaku
+kokugo  25.667728 -0.484471
+suugaku -0.484471 99.208435</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(d1_ryo,<span class="at">use=</span><span class="st">"pairwise.complete.obs"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              kokugo      suugaku
+kokugo   1.000000000 -0.009600631
+suugaku -0.009600631  1.000000000</code></pre>
+</div>
+</div>
+</section>
+<section id="散布図の描出" class="level3">
+<h3 class="anchored" data-anchor-id="散布図の描出">散布図の描出</h3>
+<ul>
+<li><code>d1$kokugo</code>および<code>d1$suugaku</code>は，散布図を作成する2つの量的変数を指定しています。</li>
+<li><code>pch</code>は，散布図で用いるマークを指定しています。<a href="http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r">R plot pch symbols</a>を参照して，好きなマークに変更してみてください。</li>
+<li>こちらでも色指定できます。ヒストグラムと同じように，<code>col="grey"</code>などと指定します。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(d1<span class="sc">$</span>kokugo,d1<span class="sc">$</span>suugaku,<span class="at">las=</span><span class="dv">1</span>,<span class="at">main=</span><span class="st">'国語と数学'</span>,<span class="at">pch=</span><span class="dv">16</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="report_01_2022_files/figure-html/scatter-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
